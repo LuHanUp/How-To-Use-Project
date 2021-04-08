@@ -2,7 +2,7 @@ create database mybatis_plus;
 
 create table tbl_employee(
     id int primary key auto_increment,
-    las_name varchar(50),
+    last_name varchar(50),
     email varchar(50),
     gender char(1),
     age int

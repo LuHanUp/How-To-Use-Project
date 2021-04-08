@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import top.luhan.mybaits.plus.domain.entity.Employee;
 import top.luhan.mybaits.plus.mapper.EmployeeMapper;
 
 import javax.sql.DataSource;
@@ -23,5 +24,16 @@ public class TestMybatisPlus {
     public void testDataSource() {
         DataSource dataSource = applicationContext.getBean(DataSource.class);
         log.info("获取的数据源Bean:" + dataSource);
+    }
+
+    @Test
+    public void testInsert() {
+        Employee employee = new Employee();
+        employee.setLastName("mybatis-plus");
+        employee.setEmail("mybatis-plus@baomidou.com");
+        employee.setGender(0);
+        employee.setAge(3);
+
+        employeeMapper.insert(employee);
     }
 }

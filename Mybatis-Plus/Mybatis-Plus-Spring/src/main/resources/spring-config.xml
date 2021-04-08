@@ -28,7 +28,20 @@
             -->
     <bean id="sqlSessionFactoryBean" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <!--        设置mybatis的配置文件地址-->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--        设置全局配置bean-->
+        <property name="globalConfig" ref="globalConfig"/>
+    </bean>
+
+    <!--    mybatis-plus全局配置信息-->
+    <bean id="globalConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig">
+        <property name="dbConfig" ref="mybatisPlusDbConfig"/>
+    </bean>
+
+    <bean id="mybatisPlusDbConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig$DbConfig">
+        <!--        设置全局的主键id策略-->
+        <property name="idType" value="AUTO"/>
     </bean>
 
     <!--    配置Mapper接口扫描路径-->
