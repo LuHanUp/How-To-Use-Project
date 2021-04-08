@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Mybatis-Plus</artifactId>
+        <groupId>top.luhan.use.project</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>Mybatis-Plus-Spring</artifactId>
+
+    <description>
+        介绍如何使用Mybatis-Plus，并且和Spring进行集成
+        mybatis-plus官网：https://mp.baomidou.com/
+        mybatis-plus官方文档：https://mp.baomidou.com/guide/
+        mybatis-plus github地址：https://github.com/baomidou/mybatis-plus
+        mybatis-plus gitee地址：https://gitee.com/baomidou/mybatis-plus
+        mybatis3官方文档：https://mybatis.org/mybatis-3/zh/
+        mybatis3 github地址：https://github.com/mybatis/mybatis-3
+    </description>
+
+    <properties>
+        <spring.version>5.3.2</spring.version>
+        <mybatis-plus.version>3.4.0</mybatis-plus.version>
+    </properties>
+
+
+    <dependencies>
+        <!--        mysql数据库驱动依赖-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version>
+        </dependency>
+
+        <!--Spring相关依赖-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!--        Mybatis-Plus依赖
+            其中Mybatis-Plus会自动添加Mybatis和Mybatis-Spring相关的依赖
+            不需要我们在手动添加
+        -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!--        druid连接池依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.20</version>
+        </dependency>
+    </dependencies>
+</project>
