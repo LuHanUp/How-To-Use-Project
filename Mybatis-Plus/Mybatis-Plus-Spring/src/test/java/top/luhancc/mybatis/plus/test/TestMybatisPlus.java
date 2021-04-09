@@ -1,5 +1,7 @@
 package top.luhancc.mybatis.plus.test;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -35,5 +37,13 @@ public class TestMybatisPlus {
         employee.setAge(3);
 
         employeeMapper.insert(employee);
+    }
+
+    @Test
+    public void testEntityWrapper() {
+        QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("gender", 1).between("age", 10, 50);
+        Page<Employee> employeePage = employeeMapper.selectPage(new Page<>(1, 2), queryWrapper);
+        log.info(employeePage);
     }
 }
