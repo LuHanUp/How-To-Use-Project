@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Mybatis-Plus-Spring</module>
+        <module>Mybatis-Plus-GenerateCode</module>
     </modules>
 
     <packaging>pom</packaging>
