@@ -13,6 +13,24 @@
     <!-- 指定zookeeper地址 -->
     <dubbo:registry address="zookeeper://192.168.2.142:2181?client=curator" client="curator" protocol="zookeeper"/>
 
-    <!-- 声明需要调用的远程服务接口 -->
-    <dubbo:reference interface="top.luhancc.use.framework.dubbo.service.UserService" id="userService"/>
+    <!-- 声明需要调用的远程服务接口,当前属性的配置只会作用在当前interface所指定的接口类上
+         dubbo支持方法级别的参数设置,只需要在<dubbo:reference>标签里添加<dubbo:method>标签即可
+         可以使用到的配置如下:
+            check:表示启动时需要的服务是否存在的检查,如果设置为true,当服务不存在时启动就会报错
+                1. 当出现循环依赖时,必须有一方设置给我false
+                2. 当bean是懒加载时,必须设置为false
+            timeout:表示服务调用的超时时间,单位ms
+            retries:服务重试次数,不包含第一次调用。会配合负载匀横策略一起工作,比如:轮询的策略,服务有3份,那么重试时会依次重启其余的服务
+            version:服务的版本,当出现服务有一个新版本时,并且不想全部消费新版本的服务,就可以使用此配置来设定使用哪个版本的服务
+                *:表示随机使用任意版本的服务
+         配置的优先级(顺序是优先====>不优先):方法级别===>类级别====>全局配置级别
+         如果优先级一方,则消费者优先,提供者次之
+    -->
+    <dubbo:reference interface="top.luhancc.use.framework.dubbo.service.UserService" id="userService">
+        <!-- 针对UserService.getUserAddressList的配置 -->
+        <!--        <dubbo:method name="getUserAddressList"></dubbo:method>-->
+    </dubbo:reference>
+
+    <!-- 配置当前消费者的统一规则，相当于dubbo:reference标签的缺省配置 -->
+    <dubbo:consumer check="true"/>
 </beans>
