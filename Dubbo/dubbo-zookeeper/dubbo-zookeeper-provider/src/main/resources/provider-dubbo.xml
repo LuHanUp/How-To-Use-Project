@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+    <!-- 指定当前应用的名称 -->
+    <dubbo:application name="dubbo-zookeeper-provider"/>
+
+    <!-- 指定zookeeper地址 -->
+    <dubbo:registry address="zookeeper://192.168.2.142:2181?client=curator" client="curator" protocol="zookeeper"/>
+
+    <!-- 指定dubbo之间的通信规则 -->
+    <dubbo:protocol name="dubbo" port="20080"/>
+
+    <!-- 暴露UserService服务 -->
+    <bean id="userService" class="top.luhancc.use.framework.dubbo.service.impl.UserServiceImpl"/>
+    <dubbo:service interface="top.luhancc.use.framework.dubbo.service.UserService" ref="userService"/>
+</beans>
