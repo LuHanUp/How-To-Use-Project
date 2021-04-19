@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dubbo-zookeeper-api</artifactId>
-    <description>存放dubbo-zookeeper过程的所有的接口类、通用的模型类</description>
+    <description>存放dubbo-zookeeper工程的所有的接口类、通用的模型类</description>
 
 
 </project>
