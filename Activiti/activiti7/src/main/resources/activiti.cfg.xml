@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<beans xmlns="http://www.springframework.org/schema/beans">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--    activiti默认方式下,固定为processEngineConfiguration-->
     <bean id="processEngineConfiguration"
           class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
         <!--        配置数据库相关的信息-->
         <property name="jdbcDriver" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://192.168.2.142/activiti7"/>
+        <property name="jdbcUrl" value="jdbc:mysql://192.168.2.141:3306/activiti7"/>
         <property name="jdbcUsername" value="root"/>
-        <property name="jdbcPassword" value="123456"/>
+        <property name="jdbcPassword" value="root"/>
         <!--        如果数据库中已经存在相对应的表,那么直接使用,否则会进行创建-->
         <property name="databaseSchemaUpdate" value="true"/>
     </bean>
