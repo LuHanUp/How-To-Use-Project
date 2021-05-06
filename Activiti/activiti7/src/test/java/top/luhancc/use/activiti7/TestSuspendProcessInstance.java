@@ -3,7 +3,9 @@ package top.luhancc.use.activiti7;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +37,7 @@ public class TestSuspendProcessInstance {
                 .processDefinitionKey("tripProcess")
                 .singleResult();
         // 通过流程定义对象挂起这个定义对象所关联的所有流程实例
-        // 一旦流程实例被挂起,那么就不可以继续执行和重新开始一个流程实例
+        // 一旦流程定义被挂起,那么就不可以继续执行和重新开始一个流程实例
         /**
          * suspendProcessInstances:是否挂起定义下的所有流程实例
          * suspensionDate:流程实例被挂起的时间,如果为null,则立即挂起
@@ -59,5 +61,32 @@ public class TestSuspendProcessInstance {
          * activationDate:激活时间,如果为null,则立即激活
          */
         repositoryService.activateProcessDefinitionById(processDefinition.getId(), true, null);
+    }
+
+    /**
+     * 挂起单个流程实例
+     */
+    @Test
+    public void suspendSingletonProcessInstance() {
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                .processInstanceBusinessKey("1") // businessKey即为关联业务系统的主键id,比如请假记录表的主键id
+                .singleResult();
+        // 挂起当前流程实例
+        // 当流程实例被挂起时,这个实例的后续步骤将不会再继续执行
+        runtimeService.suspendProcessInstanceById(processInstance.getId());
+    }
+
+    /**
+     * 激活单个流程实例
+     */
+    @Test
+    public void activateSingletonProcessInstance() {
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                .processInstanceBusinessKey("1") // businessKey即为关联业务系统的主键id,比如请假记录表的主键id
+                .singleResult();
+        // 激活当前流程实例
+        runtimeService.activateProcessInstanceById(processInstance.getId());
     }
 }
