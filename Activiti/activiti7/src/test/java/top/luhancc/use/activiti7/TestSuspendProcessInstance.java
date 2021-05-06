@@ -11,6 +11,8 @@ import org.junit.Test;
 
 /**
  * 挂起和激活流程实例
+ * <p>
+ * 当流程实例被挂起后,继续执行时？则会抛出异常：ActivitiException: Cannot complete a suspend task
  *
  * @author luHan
  * @create 2021/5/6 14:16
