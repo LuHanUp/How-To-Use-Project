@@ -9,6 +9,10 @@ import top.luhancc.use.activiti7.BaseTest;
  * 启动一个流程实例--->完成自己的待办任务--->结束流程
  * </p>
  *
+ * <p>
+ * bpmn文件参考:{@code bpmn/holiday/holiday4.bpmn}
+ * </p>
+ *
  * @author luHan
  * @create 2021/5/8 13:23
  * @since 1.0.0
