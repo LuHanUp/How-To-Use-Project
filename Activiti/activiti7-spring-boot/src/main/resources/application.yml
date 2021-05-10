@@ -5,4 +5,5 @@ spring:
     username: root
     password: root
   activiti:
-    db-history-used: true # 记录历史信息到相关的历史表中
+    db-history-used: true # 使用历史表
+    history-level: audit # 对历史表进行记录
