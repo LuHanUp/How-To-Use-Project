@@ -10,6 +10,7 @@
     <modules>
         <module>activiti7</module>
         <module>activiti7-spring</module>
+        <module>activiti7-spring-boot</module>
     </modules>
     <packaging>pom</packaging>
 

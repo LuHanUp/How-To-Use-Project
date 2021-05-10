@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.2.141:3306/activiti7?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&&characterEncoding=utf-8&allowMultiQueries=true&useAffectedRows=true
+    username: root
+    password: root
+  activiti:
+    db-history-used: true # 记录历史信息到相关的历史表中
