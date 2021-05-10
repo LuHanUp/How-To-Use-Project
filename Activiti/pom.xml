@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>activiti7</module>
+        <module>activiti7-spring</module>
     </modules>
     <packaging>pom</packaging>
 
