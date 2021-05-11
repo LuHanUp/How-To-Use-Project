@@ -15,7 +15,19 @@
         <servlet-name>spring-mvc-servlet</servlet-name>
         <!--
             方式一：带指定后缀的 比如:*.do *.action ... 这样只会拦截和后缀名相同的请求
-            方式二：/ 不会拦截.jsp请求
+            方式二：/ 不会拦截.jsp请求,但是会拦截.html、.css、.js等静态资源
+                解决方案：
+                    方案一：在spring配置文件中配置一个<mvc:default-servlet-handler/>
+                        缺点：静态资源的位置有局限，只能放在webapp这个目录下，子目录也不行
+                    方案二：在spring配置文件中配置一个<mvc:resources mapping="/resources/**" location="classpath:/"/>
+                为什么配置为/会拦截静态资源？？？
+                    因为tomcat容器中也有一个web.xml(父),而我们工程的web.xml(子)是继承自tomcat的
+                    在父web.xml中有一个DefaultServlet,而其url-pattern也是/,此时我们工程的
+                    web.xml复写了tomcat的web.xml,而父web.xml的那个DefaultServlet是专门处理静态资源
+                    的一个Servlet,而我们工程将其复写了就会导致请求被我们工程的Servlet拦截了
+                为什么不会拦截.jsp呢？？？
+                    因为在父web.xml中有一个JspServlet，这个Servlet拦截.jsp文件，而我们并没有覆写这个配置，
+                    所以此时spring mvc不拦截.jsp请求,而是交给了tomcat的JspServlet去处理
             方式三：/* 拦截所有，包括.jsp请求也会被拦截
         -->
         <url-pattern>/</url-pattern>

@@ -16,4 +16,18 @@
 
     <!-- 自动注册最合适的处理器映射器、处理器适配器 -->
     <mvc:annotation-driven/>
+
+    <!--解决静态资源被拦截的方案一：
+        原理：添加该标签后，会在SpringMvc上下文中定义一个DefaultServletHttpRequestHandler对象
+             这个对象会对请求进行过滤筛查，如果发现是一个静态资源请求，那么会把请求转给tomcat进行处理
+             如果不是静态资源请求，那么还是由SpringMvc进行处理
+    -->
+    <mvc:default-servlet-handler/>
+
+    <!--静态资源配置，方案二：由SpringMvc自己处理静态资源
+        如果请求是以/resources开头的，那么就会去classpath下面去找
+        mapping：约定的静态资源的url规则
+        location：指定的静态资源的存放路径
+    -->
+    <mvc:resources mapping="/resources/**" location="classpath:/"/>
 </beans>
