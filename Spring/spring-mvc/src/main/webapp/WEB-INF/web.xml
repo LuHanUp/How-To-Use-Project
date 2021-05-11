@@ -57,4 +57,23 @@
         -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>top.luhancc.springmvc.listener.MyServletContextListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>top.luhancc.springmvc.listener.MyServletRequestListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>top.luhancc.springmvc.listener.MyHttpSessionListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>top.luhancc.springmvc.listener.MyServletAttributeListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>top.luhancc.springmvc.listener.MyHttpSessionBindingListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>top.luhancc.springmvc.listener.MyHttpSessionActivationListener</listener-class>
+    </listener>
 </web-app>
