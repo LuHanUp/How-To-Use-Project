@@ -15,7 +15,7 @@
     </bean>
 
     <!-- 自动注册最合适的处理器映射器、处理器适配器 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionServiceFactoryBean"/>
 
     <!--解决静态资源被拦截的方案一：
         原理：添加该标签后，会在SpringMvc上下文中定义一个DefaultServletHttpRequestHandler对象
@@ -30,4 +30,15 @@
         location：指定的静态资源的存放路径
     -->
     <mvc:resources mapping="/resources/**" location="classpath:/"/>
+
+    <!--注册自定义类型转换器-->
+    <bean id="conversionServiceFactoryBean"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!--注册自定义日期类型转换器-->
+                <bean class="top.luhancc.springmvc.controller.param.DateParameterConverter"/>
+            </set>
+        </property>
+    </bean>
 </beans>
