@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * 演示SpringMvc Model传值的方式
+ * 演示SpringMvc 向请求域传值的方式
  *
  * @author luHan
  * @create 2021/5/11 10:38
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/model")
-public class ModelController {
+public class RequestAreaTransferDataController {
 
     @RequestMapping("/returnModelAndView")
     public ModelAndView returnModelAndView() {
