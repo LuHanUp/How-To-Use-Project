@@ -37,6 +37,21 @@
         <div>SpringMvc接收日期类型的参数</div>
         <a href="/parameter/bind/receiveDateParameter?birthday=1995-09-11">点击测试</a>
     </fieldset>
+
+    <fieldset>
+        <div>SpringMvc接收文件测试</div>
+        <div>
+            <%-- 文件上传到SpringMvc中有几点需要注意：
+                1. method="post"
+                2. enctype="multipart/form-data"
+                3. <input type="file" name="file"> name就是SpringMvc中handler接收文件参数名称
+            --%>
+            <form method="post" enctype="multipart/form-data" action="/parameter/bind/fileUpload">
+                <input type="file" name="file">
+                <input type="submit" value="上传">
+            </form>
+        </div>
+    </fieldset>
 </div>
 </body>
 </html>

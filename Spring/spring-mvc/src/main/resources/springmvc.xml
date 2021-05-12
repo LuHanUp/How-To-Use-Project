@@ -60,4 +60,12 @@
             <bean class="top.luhancc.springmvc.interceptor.MyInterceptor02"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!--文件上传解析器
+        bean的名称固定为multipartResolver
+    -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--文件上传的大小限制,默认为-1没有上限-->
+        <property name="maxUploadSize" value="500000"/>
+    </bean>
 </beans>

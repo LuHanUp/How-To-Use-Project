@@ -2,13 +2,19 @@ package top.luhancc.springmvc.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import top.luhancc.springmvc.controller.param.QueryVo;
 import top.luhancc.springmvc.controller.param.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * SpringMvc 请求参数绑定
@@ -80,5 +86,25 @@ public class RequestParameterBindController {
     @RequestMapping("receiveDateParameter")
     public void receiveDateParameter(Date birthday) {
         System.out.println("birthday:" + birthday);
+    }
+
+    @RequestMapping(value = "fileUpload", method = RequestMethod.POST)
+    public void fileUpload(MultipartFile file, HttpSession session) {
+        String originalFilename = file.getOriginalFilename();// 文件原始名称
+        String ext = originalFilename.substring(originalFilename.lastIndexOf("."), originalFilename.length());
+        String newName = UUID.randomUUID() + ext;
+        // 获取项目/uploads目录的绝对路径
+        String realPath = session.getServletContext().getRealPath("/uploads");
+        String datePath = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        File folder = new File(realPath + "/" + datePath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        try {
+            // 存储文件到目录
+            file.transferTo(new File(folder, newName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
