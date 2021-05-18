@@ -3,6 +3,7 @@ package top.luhancc.shiro.springboot.controller;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * {@code @RequiresPermissions()}表示访问此方法必须具备的权限
+     * {@code @RequiresRoles()} 表示访问此方法必须具备的角色
+     * <p>
+     * 如果注解的形式来配置的话，如果未经过授权则会抛出异常
+     * 而基于过滤器的方式，未授权则会跳转到指定的一个url上
+     *
+     * @return
+     */
     //添加
     @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequiresPermissions(value = "ADD_USER")// 表示访问此方法需要拥有'ADD_USER'这个权限
     public String add() {
         return "添加用户成功";
     }
