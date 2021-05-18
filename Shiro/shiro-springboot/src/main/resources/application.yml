@@ -4,12 +4,12 @@ spring:
   application:
     name: shiro-springboot #指定服务名
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.2.142:3306/shiro_db?useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.2.142:3306/shiro_db?useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
     password: 123456
   jpa:
-    database: MySQL
+    database: mysql
     show-sql: true
     open-in-view: true
   redis:

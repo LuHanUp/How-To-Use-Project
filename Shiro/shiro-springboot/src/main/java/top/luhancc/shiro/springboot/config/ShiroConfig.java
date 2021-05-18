@@ -1,12 +1,21 @@
 package top.luhancc.shiro.springboot.config;
 
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import top.luhancc.shiro.springboot.realm.AuthRealm;
+import top.luhancc.shiro.springboot.session.CustomSessionManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,14 +30,24 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    @Value("${spring.redis.host}")
+    private String redisHost;
+    @Value("${spring.redis.port}")
+    private int redisPort;
+
     @Bean
     public AuthRealm authRealm() {
         return new AuthRealm();
     }
 
     @Bean
-    public SecurityManager securityManager(AuthRealm authRealm) {
-        return new DefaultWebSecurityManager(authRealm);
+    public SecurityManager securityManager(AuthRealm authRealm, SessionManager sessionManager, CacheManager cacheManager) {
+        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(authRealm);
+        // 将自定义的会话管理器注册到安全管理器中
+        defaultWebSecurityManager.setSessionManager(sessionManager);
+        // 将缓存管理器注册到安全管理器中
+        defaultWebSecurityManager.setCacheManager(cacheManager);
+        return defaultWebSecurityManager;
     }
 
     /**
@@ -66,5 +85,36 @@ public class ShiroConfig {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
+
+    //================================将session会话管理在redis的配置依赖项============================================
+    @Bean
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(redisHost);
+        redisManager.setPort(redisPort);
+        return redisManager;
+    }
+
+    @Bean
+    public RedisSessionDAO redisSessionDAO(RedisManager redisManager) {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager);
+        return redisSessionDAO;
+    }
+
+    @Bean
+    public SessionManager sessionManager(RedisSessionDAO redisSessionDAO) {
+        CustomSessionManager sessionManager = new CustomSessionManager();
+        sessionManager.setSessionDAO(redisSessionDAO);
+        return sessionManager;
+    }
+
+    @Bean
+    public CacheManager cacheManager(RedisManager redisManager) {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager);
+        return redisCacheManager;
+    }
+    //================================将session会话管理在redis的配置依赖项============================================
 
 }

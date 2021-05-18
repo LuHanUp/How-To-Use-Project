@@ -45,9 +45,9 @@ public class AuthRealm extends AuthorizingRealm {
         User user = (User) principalCollection.getPrimaryPrincipal();
         Set<Role> roles = user.getRoles();
         Set<String> roleIds = roles.stream().map(Role::getId).collect(Collectors.toSet());
-        Set<String> permIds = roles.stream().flatMap(role -> role.getPermissions().stream()).map(Permission::getId).collect(Collectors.toSet());
+        Set<String> perms = roles.stream().flatMap(role -> role.getPermissions().stream()).map(Permission::getCode).collect(Collectors.toSet());
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo(roleIds);
-        simpleAuthorizationInfo.setStringPermissions(permIds);
+        simpleAuthorizationInfo.setStringPermissions(perms);
         return simpleAuthorizationInfo;
     }
 

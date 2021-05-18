@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import top.luhancc.shiro.springboot.service.UserService;
 
+import java.io.Serializable;
+
 @RestController
 public class UserController {
 
@@ -36,6 +38,7 @@ public class UserController {
 
     //查询
     @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @RequiresPermissions(value = "FIND_USER")// 表示访问此方法需要拥有'ADD_USER'这个权限
     public String find() {
         return "查询用户成功";
     }
@@ -67,8 +70,9 @@ public class UserController {
         Md5Hash md5Hash = new Md5Hash(password, username + "abcd", 3);
         try {
             token.setPassword(md5Hash.toString().toCharArray());
+            Serializable sessionId = subject.getSession().getId();
             subject.login(token);
-            return "登录成功";
+            return "登录成功,sessionId:" + sessionId;
         } catch (AuthenticationException e) {
             return "登录失败";
         }

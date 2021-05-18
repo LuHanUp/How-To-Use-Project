@@ -2,6 +2,7 @@ package top.luhancc.shiro.springboot.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.crazycake.shiro.AuthCachePrincipal;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,12 +11,16 @@ import java.util.Set;
 
 /**
  * 用户实体类
+ * <p>
+ * AuthCachePrincipal表示将User通过CacheManager缓存起来的key是什么
+ *
+ * @author luhan
  */
 @Entity
 @Table(name = "pe_user")
 @Getter
 @Setter
-public class User implements Serializable {
+public class User implements Serializable, AuthCachePrincipal {
     private static final long serialVersionUID = 4297464181093070302L;
     /**
      * ID
@@ -30,4 +35,9 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private Set<Role> roles = new HashSet<Role>();//用户与角色   多对多
+
+    @Override
+    public String getAuthCacheKey() {
+        return "user:cache:" + username + ":" + id;
+    }
 }
