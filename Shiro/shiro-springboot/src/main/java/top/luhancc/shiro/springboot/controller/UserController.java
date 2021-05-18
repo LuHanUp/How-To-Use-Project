@@ -55,6 +55,7 @@ public class UserController {
          */
         Md5Hash md5Hash = new Md5Hash(password, username + "abcd", 3);
         try {
+            token.setPassword(md5Hash.toString().toCharArray());
             subject.login(token);
             return "登录成功";
         } catch (AuthenticationException e) {

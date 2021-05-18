@@ -43,8 +43,13 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setLoginUrl("/authError");// 跳转登录页面的url
         shiroFilterFactoryBean.setUnauthorizedUrl("/authError");// 跳转到未授权的url
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/user/home", "anon");// 当前请求地址可以匿名访问
-        filterMap.put("/user/**", "authc");// 当前请求地址需要认证
+        filterMap.put("/user/home", "anon");// /user/home这个请求可以匿名访问
+        /**
+         * 通过过滤器的形式指定请求地址的授权
+         */
+//        filterMap.put("/user/home", "perms[权限唯一code,...]");// 表示需要用户拥有权限才能访问/user/home这个路径
+//        filterMap.put("/user/home", "roles[角色唯一code,...]");// 表示用户拥有角色才能访问/user/home这个路径
+        filterMap.put("/user/**", "authc");// 满足请求地址的需要认证
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
     }
