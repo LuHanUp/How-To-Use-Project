@@ -18,7 +18,7 @@ public class PoiReadTest {
      */
     @Test
     public void testReadExcel() throws Exception {
-        Workbook workbook = new XSSFWorkbook("/Users/luhan/学习/java/How-To-Use-Project/Poi/poi-simple/demo.xlsx");
+        Workbook workbook = new XSSFWorkbook("/Users/luhan/学习/java/How-To-Use-Project/Poi/poi-simple/demo-million-data.xlsx");
         Sheet sheet = workbook.getSheetAt(0);// 获取Sheet,参数是索引
         // 循环读取sheet的数据,getLastRowNum返回的是最后一行的索引
         for (int rowIndex = 0; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
