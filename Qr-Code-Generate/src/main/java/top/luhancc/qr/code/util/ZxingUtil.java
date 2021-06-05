@@ -8,6 +8,8 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -55,10 +57,39 @@ public final class ZxingUtil {
                 bufferedImage.setRGB(x, y, rgb);
             }
         }
-        if (image == null) {
-            return bufferedImageToString(bufferedImage);
+        if (image != null) {
+            bufferedImage = insertLogoImg(bufferedImage, image);
         }
-        return null;
+        return bufferedImageToString(bufferedImage);
+    }
+
+    private static BufferedImage insertLogoImg(BufferedImage bufferedImage, InputStream image) throws IOException {
+        BufferedImage logoImage = ImageIO.read(image);
+        // 判断logo宽高，不能超过二维码的宽高，如果超过了 则进行压缩
+        int width = logoImage.getWidth(null);
+        int height = logoImage.getHeight(null);
+        if (width > 100) width = 100;
+        if (height > 100) height = 100;
+
+        // 对图片进行压缩
+        Image scaledInstance = logoImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage bfImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = bfImage.getGraphics();
+        graphics.drawImage(scaledInstance, 0, 0, null);
+        graphics.dispose();
+
+        // 将logo插入到二维码中
+        Graphics2D graphics2D = bufferedImage.createGraphics();
+        int x = (300 - width) / 2;
+        int y = (300 - height) / 2;
+        graphics2D.drawImage(scaledInstance, x, y, null);
+        // 将logo边角变成圆形
+        Shape shape = new RoundRectangle2D.Float(x, y, width, height, 6, 6);
+        graphics2D.setStroke(new BasicStroke(3f));// 设置画笔的粗细
+        graphics2D.draw(shape);
+        graphics2D.dispose();
+
+        return bufferedImage;
     }
 
     public static String bufferedImageToString(BufferedImage bufferedImage) throws IOException {
