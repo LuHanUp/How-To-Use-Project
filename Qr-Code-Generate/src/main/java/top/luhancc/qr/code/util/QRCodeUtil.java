@@ -3,6 +3,7 @@ package top.luhancc.qr.code.util;
 import com.github.hui.quick.plugin.qrcode.wrapper.QrCodeGenWrapper;
 import com.github.hui.quick.plugin.qrcode.wrapper.QrCodeOptions;
 import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.awt.*;
 import java.io.IOException;
@@ -95,6 +96,21 @@ public final class QRCodeUtil {
         return QrCodeGenWrapper.of(text)
                 .setDrawEnableScale(true) // 将黑色方块使用圆形来代替
                 .setDrawStyle(QrCodeOptions.DrawStyle.CIRCLE) // 设置为圆形
+                .asString();
+    }
+
+    /**
+     * 生成图片填充的二维码,就是将黑色的小点使用图片来代替
+     *
+     * @param text  二维码内容
+     * @param image 用于填充的图片
+     * @return
+     */
+    public static String imageFileQRCode(String text, InputStream image) throws Exception {
+        return QrCodeGenWrapper.of(text)
+                .setErrorCorrection(ErrorCorrectionLevel.H)
+                .setDrawStyle(QrCodeOptions.DrawStyle.IMAGE)
+                .addImg(1, 1, image)
                 .asString();
     }
 }
