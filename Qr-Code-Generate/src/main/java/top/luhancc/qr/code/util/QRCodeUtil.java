@@ -57,4 +57,31 @@ public final class QRCodeUtil {
                 .setDrawPreColor(Color.blue) // 设置二维码那个黑色点的颜色
                 .asString();
     }
+
+    /**
+     * 生成指定背景图片的二维码
+     *
+     * @param text  二维码内容
+     * @param image 背景图片
+     * @return
+     */
+    public static String backgroundQRCode(String text, InputStream image) throws Exception {
+        // 填充模式，需要设置二维码的位置，不然会跑到左上角
+//        return QrCodeGenWrapper.of(text)
+//                .setBgImg(image)
+//                .setBgOpacity(0.5f) // 设置背景图片的透明度
+//                .setBgStyle(QrCodeOptions.BgImgStyle.FILL) // 填充模式添加背景图片,默认是全覆盖模式
+//                .setBgW(500)
+//                .setBgH(500)
+//                .setBgStartX(130)
+//                .setBgStartY(130)
+//                .asString();
+
+        // 渲染模式
+        return QrCodeGenWrapper.of(text)
+                .setBgImg(image)
+                .setBgOpacity(0.5f) // 设置背景图片的透明度
+                .setBgStyle(QrCodeOptions.BgImgStyle.PENETRATE) // 填充模式添加背景图片,默认是全覆盖模式
+                .asString();
+    }
 }
