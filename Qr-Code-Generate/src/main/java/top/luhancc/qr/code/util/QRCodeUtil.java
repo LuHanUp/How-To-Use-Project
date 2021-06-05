@@ -84,4 +84,17 @@ public final class QRCodeUtil {
                 .setBgStyle(QrCodeOptions.BgImgStyle.PENETRATE) // 填充模式添加背景图片,默认是全覆盖模式
                 .asString();
     }
+
+    /**
+     * 生成特殊形状的二维码，这里不带logo和背景图片，需要的可以自己加，结合上面的案例即可
+     *
+     * @param text 二维码内容
+     * @return
+     */
+    public static String styleQRCode(String text) throws Exception {
+        return QrCodeGenWrapper.of(text)
+                .setDrawEnableScale(true) // 将黑色方块使用圆形来代替
+                .setDrawStyle(QrCodeOptions.DrawStyle.CIRCLE) // 设置为圆形
+                .asString();
+    }
 }

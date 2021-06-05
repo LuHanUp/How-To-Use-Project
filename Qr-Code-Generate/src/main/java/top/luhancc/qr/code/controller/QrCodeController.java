@@ -34,6 +34,8 @@ public class QrCodeController {
                     return QRCodeUtil.colorQRCode(text);
                 } else if ("background".equals(flag)) {
                     return QRCodeUtil.backgroundQRCode(text, inputStream);
+                }else if("style".equals(flag)){
+                    return QRCodeUtil.styleQRCode(text);
                 }
             }
         } catch (Exception e) {
