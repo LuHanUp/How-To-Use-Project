@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import top.luhancc.qr.code.util.QRCodeUtil;
 import top.luhancc.qr.code.util.ZxingUtil;
 
 import java.io.InputStream;
@@ -22,8 +23,17 @@ public class QrCodeController {
                                @RequestParam(value = "flag") String flag) {
         try {
             InputStream inputStream = file == null ? null : file.getInputStream();
-            String imageStr = ZxingUtil.createImage(text, inputStream);
-            return imageStr;
+            if (inputStream == null && "normal".equals(flag)) {
+                return ZxingUtil.createImage(text, null);
+            } else {
+                if ("normal".equals(flag)) {
+                    return QRCodeUtil.normalQRCode(text);
+                } else if ("logo".equals(flag)) {
+                    return QRCodeUtil.logoQRCode(text, inputStream);
+                } else if ("color".equals(flag)) {
+                    return QRCodeUtil.colorQRCode(text);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
