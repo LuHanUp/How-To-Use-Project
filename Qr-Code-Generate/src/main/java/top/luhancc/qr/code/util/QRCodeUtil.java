@@ -113,4 +113,19 @@ public final class QRCodeUtil {
                 .addImg(1, 1, image)
                 .asString();
     }
+
+    /**
+     * 生成gif二维码
+     *
+     * @param text     二维码内容
+     * @param gifImage gif图片
+     * @return
+     */
+    public static String gifQRCode(String text, InputStream gifImage) throws Exception {
+        return QrCodeGenWrapper.of(text)
+                .setBgImg(gifImage)
+                .setBgOpacity(0.5f) // 设置背景图片的透明度
+                .setPicType("gif")
+                .asString();
+    }
 }

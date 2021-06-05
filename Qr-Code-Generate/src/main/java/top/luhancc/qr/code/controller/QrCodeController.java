@@ -38,6 +38,8 @@ public class QrCodeController {
                     return QRCodeUtil.styleQRCode(text);
                 } else if ("imageFile".equals(flag)) {
                     return QRCodeUtil.imageFileQRCode(text, inputStream);
+                } else if ("gif".equals(flag)) {
+                    return QRCodeUtil.gifQRCode(text, inputStream);
                 }
             }
         } catch (Exception e) {
