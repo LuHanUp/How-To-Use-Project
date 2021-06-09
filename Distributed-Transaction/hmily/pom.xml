@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Distributed-Transaction</artifactId>
+        <groupId>top.luahncc.use</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <!--
+        hmily-discover-server服务注册模块：用于将hmily-server-1和hmily-server-2注册进eureka中
+        并且方便hmily-server-1使用feign调用hmily-server-2
+
+        分布式事务的案例基于转账：用户张三向用户李四进行转账，保证两个用户的余额是正确的（两个用户是在不同的数据库中）
+        hmily-server-1向hmily-server-2进行转账
+        -->
+        <module>hmily-discover-server</module>
+        <module>hmily-server-1</module>
+        <module>hmily-server-2</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <artifactId>hmily</artifactId>
+
+    <description>
+        Hmily是一个高性能分布式事务tcc开源框架。基于java语言来开发(JDK1.8)，支持dubbo， springcloud，motan等rpc框架进行分布式事务。
+        它目前支持以下特性:
+        1. 支持嵌套事务(Nested transaction support)。 采用disruptor框架进行事务日志的异步读写，与RPC框架的性能毫无差别。 支持SpringBoot-starter 项目启动，使用简单。
+        2. RPC框架支持 : dubbo,moTan,springCloud。
+        3. 本地事务存储支持 : redis,mongodb,zookeeper,file,mysql。
+        4. 事务日志序列化支持 :java，hessian，kryo，protoStuff。
+        5. 采用Aspect AOP 切面思想与Spring无缝集成，天然支持集群。
+        6. RPC事务恢复，超时异常恢复等。
+
+        Hmily利用AOP对参与分布式事务的本地方法与远程方法进行拦截处理，通过多方拦截，事务参与者能 透明的调用到另一方的Try、Conform、Cancel方法;
+        传递事务上下文;并记录事务日志，酌情进行补 偿，重试等。
+
+        Hmily不需要事务协调服务，但需要提供一个数据库(mysql/mongodb/zookeeper/redis/file)来进行日 志存储。
+        Hmily实现的TCC服务与普通的服务一样，只需要暴露一个接口，也就是它的Try业务。 Confirm/Cancel业务逻辑，
+        只是因为全局事务提交/回滚的需要才提供的，因此Confirm/Cancel业务只 需要被Hmily事务框架发现即可，
+        不需要被调用它的其他业务服务所感知。
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.dromara</groupId>
+                <artifactId>hmily-springcloud</artifactId>
+                <version>2.0.4-RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Greenwich.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.1.3.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.interceptor</groupId>
+                <artifactId>javax.interceptor-api</artifactId>
+                <version>1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.11</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.1.16</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
