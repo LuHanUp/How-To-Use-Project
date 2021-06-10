@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "hmily-server-2")
 public interface Bank2Client {
 
-    @GetMapping("/hmily/bank2/transfer")
+    @GetMapping("/hmily/server2/transfer")
     @Hmily
     Boolean transfer(@RequestParam("amount") Double amount);
 }

@@ -12,10 +12,28 @@ public class Bank1Controller {
     @Autowired
     AccountInfoService accountInfoService;
 
+    /**
+     * bank1向bank2发起转账
+     *
+     * @param amount
+     * @return
+     */
     @RequestMapping("/transfer")
-    public String test(@RequestParam("amount") Double amount) {
+    public String transfer(@RequestParam("amount") Double amount) {
         this.accountInfoService.updateAccountBalance("1", amount);
         return "bank1向bank2转账:" + amount;
+    }
+
+    /**
+     * 接收bank2的转账请求，添加金额
+     *
+     * @param amount
+     * @return
+     */
+    @RequestMapping("/transfer1")
+    public Boolean transfer1(@RequestParam("amount") Double amount) {
+        this.accountInfoService.updateAccountBalance1("1", amount);
+        return true;
     }
 
 }
