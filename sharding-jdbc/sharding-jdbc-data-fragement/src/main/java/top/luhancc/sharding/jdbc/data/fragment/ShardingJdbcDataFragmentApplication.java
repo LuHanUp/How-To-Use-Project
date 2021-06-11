@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShardingJdbcDemoBootstrap {
+public class ShardingJdbcDataFragmentApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShardingJdbcDemoBootstrap.class, args);
+        SpringApplication.run(ShardingJdbcDataFragmentApplication.class, args);
     }
 
 }
