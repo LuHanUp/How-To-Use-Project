@@ -39,11 +39,13 @@ public class ContentService {
     public List<JDSkuItem> parse(String keyword) {
         try {
             List<JDSkuItem> jdSkuItemList = ReptileUtils.reptileJDSkuList(keyword);
-            BulkRequest bulkRequest = new BulkRequest();
-            for (JDSkuItem jdSkuItem : jdSkuItemList) {
-                bulkRequest.add(new IndexRequest("jd_goods").id(jdSkuItem.getSkuId()).source(JSON.toJSONString(jdSkuItem), XContentType.JSON));
+            if (!jdSkuItemList.isEmpty()) {
+                BulkRequest bulkRequest = new BulkRequest();
+                for (JDSkuItem jdSkuItem : jdSkuItemList) {
+                    bulkRequest.add(new IndexRequest("jd_goods").id(jdSkuItem.getSkuId()).source(JSON.toJSONString(jdSkuItem), XContentType.JSON));
+                }
+                restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
             }
-            restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
             return jdSkuItemList;
         } catch (Exception e) {
             e.printStackTrace();
