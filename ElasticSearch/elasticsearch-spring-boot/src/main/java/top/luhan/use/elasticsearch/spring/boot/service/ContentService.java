@@ -16,6 +16,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import top.luhan.use.elasticsearch.spring.boot.model.JDSkuItem;
 import top.luhan.use.elasticsearch.spring.boot.util.ReptileUtils;
 
@@ -65,7 +66,11 @@ public class ContentService {
 
         // 按照商品名称分词查询
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-        queryBuilder.must(QueryBuilders.matchQuery("name", keyword));
+        if (StringUtils.isEmpty(keyword)) {
+            queryBuilder.must(QueryBuilders.matchAllQuery());
+        } else {
+            queryBuilder.must(QueryBuilders.matchQuery("name", keyword));
+        }
         searchSourceBuilder.query(queryBuilder);
 
         searchRequest.source(searchSourceBuilder);
@@ -83,6 +88,7 @@ public class ContentService {
                     String newName = nameHighLightField.getFragments()[0].toString();
                     sourceAsMap.put("name", newName);
                 }
+                sourceAsMap.put("price", (Long.parseLong(sourceAsMap.get("price").toString()) / 100));
                 datas.add(sourceAsMap);
             }
             return datas;

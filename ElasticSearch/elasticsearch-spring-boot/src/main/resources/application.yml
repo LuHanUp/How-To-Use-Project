@@ -5,3 +5,5 @@ server:
 spring:
   application:
     name: elasticsearch-spring-boot
+  thymeleaf:
+    cache: false
