@@ -22,11 +22,11 @@ public class SearchController {
     @Autowired
     private ContentService contentService;
 
-    @GetMapping("search/{keyword}/{pageNo}/{pageSize}")
+    @GetMapping("search")
     @ResponseBody
-    public List<Map<String, Object>> search(@PathVariable("keyword") String keyword,
-                                            @PathVariable(value = "pageNo") int pageNo,
-                                            @PathVariable("pageSize") int pageSize) {
+    public List<Map<String, Object>> search(@RequestParam(value = "keyword", required = false) String keyword,
+                                            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+                                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
         return contentService.search(keyword, pageNo, pageSize);
     }
 
