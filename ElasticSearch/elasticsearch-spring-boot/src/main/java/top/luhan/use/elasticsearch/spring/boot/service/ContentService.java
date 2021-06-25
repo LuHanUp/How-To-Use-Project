@@ -65,7 +65,7 @@ public class ContentService {
 
         // 按照商品名称分词查询
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-        queryBuilder.must(QueryBuilders.matchQuery("name", keyword).analyzer("ik_smart"));
+        queryBuilder.must(QueryBuilders.matchQuery("name", keyword));
         searchSourceBuilder.query(queryBuilder);
 
         searchRequest.source(searchSourceBuilder);
