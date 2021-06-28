@@ -24,7 +24,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--引入spring mbc相关的依赖-->
+        <!--引入spring webmvc相关的依赖-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
