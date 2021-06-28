@@ -1,0 +1,38 @@
+# 动态重新索引数据
+~~~text
+POST /jd_goods/_update_by_query
+{
+  "query":{
+    "bool":{
+      "should":[
+        {
+          "bool":{
+            "must":[
+              {
+                "term":{
+                  "字段":{
+                    "value":"值"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "bool":{
+            "must":[
+              {
+                "term":{
+                  "字段2":{
+                    "value":"值2"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+~~~
