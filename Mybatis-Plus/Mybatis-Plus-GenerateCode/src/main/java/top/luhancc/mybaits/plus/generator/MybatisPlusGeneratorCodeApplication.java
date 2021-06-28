@@ -110,6 +110,11 @@ public class MybatisPlusGeneratorCodeApplication {
     }
 
     public void start() {
+        config();
+        dataSource();
+        strategyConfig();
+        packageConfig();
+        mergeConfig();
         System.out.println("=============================开始执行代码生成======================================");
         autoGenerator.execute();
         System.out.println("=============================代码生成完成======================================");
@@ -117,11 +122,6 @@ public class MybatisPlusGeneratorCodeApplication {
 
     public static void main(String[] args) {
         MybatisPlusGeneratorCodeApplication mybatisPlusGeneratorCodeApplication = new MybatisPlusGeneratorCodeApplication();
-        mybatisPlusGeneratorCodeApplication.config();
-        mybatisPlusGeneratorCodeApplication.dataSource();
-        mybatisPlusGeneratorCodeApplication.strategyConfig();
-        mybatisPlusGeneratorCodeApplication.packageConfig();
-        mybatisPlusGeneratorCodeApplication.mergeConfig();
         mybatisPlusGeneratorCodeApplication.start();
     }
 }

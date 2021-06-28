@@ -46,8 +46,7 @@ public class PermissionRealm extends AuthorizingRealm {
         String password = new String(usernamePasswordToken.getPassword());
         // 因为这里没有使用数据库,所以直接比较一个固定的密码,这里可以修改为比较数据库中的密码
         if ("123456".equals(password)) {
-            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, getName());
-            return simpleAuthenticationInfo;
+            return new SimpleAuthenticationInfo(username, password, getName());
         } else {
             throw new RuntimeException("用户名或密码错误");
         }
