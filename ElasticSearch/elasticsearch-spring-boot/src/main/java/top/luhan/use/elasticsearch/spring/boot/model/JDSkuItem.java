@@ -46,4 +46,9 @@ public class JDSkuItem {
      */
     private String name;
 
+    /**
+     * 商品名称对应completion类型的属性
+     */
+    private String name_completion;
+
 }

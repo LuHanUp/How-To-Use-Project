@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.luhan.use.elasticsearch.spring.boot.service.ContentService;
@@ -38,5 +39,16 @@ public class SearchController {
         List<Map<String, Object>> dataList = contentService.search(keyword, pageNo, pageSize);
         modelMap.put("items", dataList);
         return "search";
+    }
+
+    /**
+     * 自动补全
+     *
+     * @return
+     */
+    @GetMapping("auto-complete")
+    @ResponseBody
+    public List<String> autocomplete(@RequestParam(value = "keyword") String keyword) {
+        return contentService.autocomplete(keyword);
     }
 }

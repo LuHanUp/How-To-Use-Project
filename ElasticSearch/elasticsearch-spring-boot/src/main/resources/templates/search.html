@@ -5,6 +5,7 @@
     <title>搜索结果页</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
+<script th:src="@{/js/jquery.min.js}"></script>
 <body>
 <div class="page">
     <div id="mallPage" class=" mallist tmall- page-not-market ">
@@ -24,6 +25,9 @@
                                             <div class="s-combobox-input-wrap">
                                                 <input type="text" autocomplete="off" th:value="${keyword}" value="dd"
                                                        id="mq" name="keyword"
+                                                       th:oninput="mqChange()"
+                                                       th:onblur="mqBlur()"
+                                                       th:onfocus="mqChange()"
                                                        class="s-combobox-input" aria-haspopup="true">
                                             </div>
                                         </div>
@@ -40,6 +44,11 @@
                             <!--    <li><a>狂神说大数据</a></li>-->
                             <!--    <li><a>狂神聊理财</a></li>-->
                             <!--</ul>-->
+                        </div>
+                        <div id="auto-complete"
+                             style="background-color: #f5eded;width: 597px;margin-left: 25%;font-size: 14px;display: none">
+                            <ul>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -114,5 +123,28 @@
     </div>
 </body>
 <script>
+    function mqChange() {
+        $("#auto-complete").hide();
+        var keyword = $("#mq").val();
+        if (keyword === undefined || keyword === '') {
+            return;
+        }
+        $($("#auto-complete").find("ul")).empty();
+        $.get("/auto-complete?keyword=" + keyword, function (data) {
+            console.log(data);
+            if (data !== undefined && data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    var text = data[i];
+                    var liHtml = "<li style='white-space:nowrap;text-overflow:ellipsis;overflow: hidden;'>" + text + "</li>";
+                    $($("#auto-complete").find("ul")).append(liHtml);
+                }
+                $("#auto-complete").show();
+            }
+        })
+    }
+
+    function mqBlur() {
+        $("#auto-complete").hide();
+    }
 </script>
 </html>

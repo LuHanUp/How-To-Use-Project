@@ -71,7 +71,7 @@ public class ReptileUtils {
                     }
                     long price = (long) (Double.parseDouble(priceStr) * 100);
                     long memberPrice = (long) (Double.parseDouble(memberPriceStr) * 100);
-                    JDSkuItem jdSkuItem = new JDSkuItem(skuId, spuId, img, price, memberPrice, name);
+                    JDSkuItem jdSkuItem = new JDSkuItem(skuId, spuId, img, price, memberPrice, name, name);
                     jdSkuItemList.add(jdSkuItem);
                 }
             }

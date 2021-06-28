@@ -61,7 +61,7 @@ public class GetJDSearchHtmlTest {
                 String priceStr = liElement.getElementsByClass("p-price").eq(0).text();
                 priceStr = priceStr.replace("￥", "");
                 long price = (long) (Double.parseDouble(priceStr) * 100);
-                JDSkuItem jdSkuItem = new JDSkuItem(skuId, spuId, img, price, price, name);
+                JDSkuItem jdSkuItem = new JDSkuItem(skuId, spuId, img, price, price, name, name);
                 System.out.println(jdSkuItem);
             }
         }
