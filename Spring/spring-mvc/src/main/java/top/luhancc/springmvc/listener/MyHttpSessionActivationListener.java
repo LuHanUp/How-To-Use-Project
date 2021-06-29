@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSessionEvent;
  * <pre>{@code
  *  <Context>
  *   <!-- maxIdleSwap:session中的对象多长时间不使用就钝化 -->
- *   <!-- directory:钝化后的对象的文件写到磁盘的哪个目录下  配置钝化的对象文件在                                                                       work/catalina/localhost/钝化文件 -->
- *   <Manager className="org.apache.catalina.session.PersistentManager"                                                                                                                      maxIdleSwap="1">
+ *   <!-- directory:钝化后的对象的文件写到磁盘的哪个目录下配置钝化的对象文件在work/catalina/localhost/钝化文件 -->
+ *   <Manager className="org.apache.catalina.session.PersistentManager"  maxIdleSwap="1">
  *    <Store className="org.apache.catalina.session.FileStore" directory="" />
  *   </Manager>
  *  </Context>
